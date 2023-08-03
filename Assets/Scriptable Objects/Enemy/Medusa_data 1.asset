@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3c04956970b71488db6aede7b1c444, type: 3}
+  m_Name: Medusa_data 1
+  m_EditorClassIdentifier: 
+  enemytype: 1
+  hp: 300
+  maxhp: 0
+  speed: 5
+  giveexp: 50
+  damage: 15
+  atkCooltime: 1.5
+  atkrange: 10
+  followrange: 80
+  dropItems: []
