@@ -14,7 +14,7 @@ public class Sword_Skill_Controller : MonoBehaviour
    private bool isReturning;
 
 
-    private float freezeTimeDuration;
+   [SerializeField] private float freezeTimeDuration;
     private float returnSpeed = 10f;
 
     [Header("Pierce info")]

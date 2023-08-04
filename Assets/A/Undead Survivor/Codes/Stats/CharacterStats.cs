@@ -19,6 +19,7 @@ public class CharacterStats : MonoBehaviour
 
    [Header("Defensive stats")]
     public Stat maxHealth;
+    public Stat health;
     public Stat armor;
     public Stat evasion;
     public Stat magicResistance;
@@ -49,7 +50,7 @@ public class CharacterStats : MonoBehaviour
    public int currentHealth;
 
    public System.Action onHealthChanged;
-   protected bool isDead;
+   public bool isDead { get; private set;}
 
    protected virtual void Start()
    {

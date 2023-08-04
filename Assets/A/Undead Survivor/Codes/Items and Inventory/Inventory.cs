@@ -9,6 +9,8 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
+    public List<ItemData> statingItems;
+
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
     public List<InventoryItem> inventory;
@@ -21,7 +23,7 @@ public class Inventory : MonoBehaviour
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
-     [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private Transform equipmentSlotParent;
     private UI_ItemSlot[] InventorySlot;
     private UI_ItemSlot[] stashItemSlot;
     private UI_EquipmentSlot[] equipmentSlot;
@@ -35,21 +37,32 @@ public class Inventory : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void Start() 
+    private void Start()
     {
-       inventory = new List<InventoryItem>();
-       inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
+        inventory = new List<InventoryItem>();
+        inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
 
-      stash = new List<InventoryItem>();
-      stashDictionary = new Dictionary<ItemData, InventoryItem>();
+        stash = new List<InventoryItem>();
+        stashDictionary = new Dictionary<ItemData, InventoryItem>();
 
-      equipment = new List<InventoryItem>();
-      equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
+        equipment = new List<InventoryItem>();
+        equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
 
 
-       InventorySlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
-       stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
-       equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        InventorySlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        stashItemSlot = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+
+        AddStartingItems();
+    }
+
+    private void AddStartingItems()
+    {
+        for (int i = 0; i < statingItems.Count; i++)
+        {
+            AddItem(statingItems[i]);
+
+        }
     }
 
     public void EquipItem(ItemData _item)
@@ -82,7 +95,7 @@ public class Inventory : MonoBehaviour
       UpdateSlotUI();
     }
 
-    private void UnequipItem(ItemData_Equipment itemToRemove)
+    public void UnequipItem(ItemData_Equipment itemToRemove)
     {
        if(equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
       {
@@ -198,7 +211,56 @@ public class Inventory : MonoBehaviour
 
     }
 
+    public bool CanCraft(ItemData_Equipment _itemToCraft, List<InventoryItem> _requiredMaterials)
+    {
+         List<InventoryItem> _materialsToRemove = new List<InventoryItem>();
+ 
+        for (int i = 0; i < _requiredMaterials.Count ; i++)
+        {
+            if (stashDictionary.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
+            {
+                if (stashValue.stackSize < _requiredMaterials[i].stackSize)
+                {
+                    Debug.Log("Not enough Materials in stack");
+                    return false;
+                }
+                else
+                {
+                    int amountToAddToList = _requiredMaterials[i].stackSize;
+                    while (amountToAddToList > 0)
+                    {
+                        _materialsToRemove.Add(stashValue);
+                        amountToAddToList--;
+ 
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Not enough Materials");
+                return false;
+            }
+        }
 
+
+      //인벤에서삭제
+      for (int i = 0; i < _materialsToRemove.Count; i++)
+      {
+        RemoveItem(_materialsToRemove[i].data);
+      }
+
+      //크래프트 할 아이템 추가
+
+      AddItem(_itemToCraft);
+      Debug.Log(_itemToCraft.name + "is crafted");
+
+      return true;
+
+    }
+    
+    public List<InventoryItem> GetEquipmentList() => equipment;
+
+    public List<InventoryItem> GetStashList() => stash;
     private void Update() 
     {
       if(Input.GetKeyDown(KeyCode.L))

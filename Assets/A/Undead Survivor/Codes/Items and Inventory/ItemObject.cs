@@ -8,22 +8,44 @@ public class ItemObject : MonoBehaviour
    [SerializeField] private ItemData itemData;
 
 
-    private void OnValidate() 
+    private void SetupVisuals()
     {
+        if (itemData == null)
+            return;
+
+
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
         gameObject.name = "Item object - " + itemData.itemName;
     }
 
-    void Start() {
-       
+    void Update() 
+    {
+    
     }
-   private void OnTriggerEnter2D(Collider2D collision) 
-   {
 
-    if(collision.GetComponent<Player>() != null)
+    public void SetupItem(ItemData _itemData)
+    {
+        itemData = _itemData;
+        
+        SetupVisuals();
+    }
+
+
+    public void PickupItem()
     {
         Inventory.instance.AddItem(itemData);
         Destroy(gameObject);
     }
-   }
+
+    
+    private void OnTriggerEnter2D(Collider2D collision) 
+    {
+
+    if(collision.GetComponent<Player2>() != null)
+        {
+            PickupItem();
+        }
+    }
+
+    
 }
