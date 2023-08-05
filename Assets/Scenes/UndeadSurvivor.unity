@@ -3778,7 +3778,7 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   damage:
-    baseValue: 70
+    baseValue: 15
     modifiers: 
   critChance:
     baseValue: 0
@@ -4000,7 +4000,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 8.444445
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7937,6 +7937,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8d577f9706c042f4b8e33dc03f7540b2, type: 2}
   - {fileID: 11400000, guid: a231262472411564f99bf04d6610153c, type: 2}
   - {fileID: 11400000, guid: 74d07a7c9a6357a4bb2fba4e66f050a7, type: 2}
+  - {fileID: 11400000, guid: 2864f6212f8f15545b9c85fd5186ce43, type: 2}
+  - {fileID: 11400000, guid: acc0121273d95364f99790e40853d0bd, type: 2}
   equipment: []
   inventory: []
   stash: []

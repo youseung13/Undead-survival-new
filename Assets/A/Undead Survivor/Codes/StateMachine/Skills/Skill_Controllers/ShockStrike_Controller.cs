@@ -47,7 +47,7 @@ public class ShockStrike_Controller : MonoBehaviour
 
             Invoke("DamageAndSelfDestroy", .2f);
             triggered=true;
-            anim.SetTrigger("Hit)");
+            anim.SetTrigger("Hit");
 
         }
     }
