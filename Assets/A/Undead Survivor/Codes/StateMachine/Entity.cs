@@ -71,7 +71,13 @@ public class Entity : MonoBehaviour
     {
         facingDir = facingDir * -1;
         facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
+        //transform.Rotate(0, 180, 0);
+    Vector3 newScale = transform.localScale;
+    newScale.x *= -1;
+    transform.localScale = newScale;
+  
+        
+        
 
 
         if(onFlipped != null)

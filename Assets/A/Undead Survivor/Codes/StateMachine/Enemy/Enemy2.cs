@@ -98,19 +98,21 @@ public class Enemy2 : Entity
    
    public virtual void FreezeTime(bool _timeFrozen)
    {
-    if(_timeFrozen)
-    {
-        moveSpeed = 0;
-        anim.speed = 0;
-    }
-    else
-    {
-        moveSpeed = defaulMoveSpeed;
-        anim.speed= 1;
-    }
+        if(_timeFrozen)
+        {
+            moveSpeed = 0;
+            anim.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaulMoveSpeed;
+            anim.speed= 1;
+        }
    }
 
-   protected virtual IEnumerator FreezeTimerFor(float _seconds)
+    public virtual void FreezeTimeFor(float _duration) => StartCoroutine(FreezeTimeCoroutine(_duration));
+
+   protected virtual IEnumerator FreezeTimeCoroutine(float _seconds)
    {
     FreezeTime(true);
    

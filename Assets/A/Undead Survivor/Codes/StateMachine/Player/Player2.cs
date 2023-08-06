@@ -96,6 +96,13 @@ public class Player2 : Entity
 
     if(Input.GetKeyDown(KeyCode.P))
         skill.crystal.CanUseSkill();
+
+    if(Input.GetKeyDown(KeyCode.Alpha1))
+    {
+        Inventory.instance.UseFlask();
+        Debug.Log("use flask");
+    }
+
     
    }
 

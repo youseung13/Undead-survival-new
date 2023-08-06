@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar_UI : MonoBehaviour
+public class UI_HealthBar : MonoBehaviour
 {
     private Entity entity;
     private CharacterStats myStats;
@@ -36,8 +36,12 @@ public class HealthBar_UI : MonoBehaviour
 
 
 
-    private void FlipUI() => myTransform.Rotate(0,180,0);
-
+private void FlipUI()// myTransform.Rotate(0,180,0);
+{
+    Vector3 newScale = transform.localScale;
+    newScale.x *= -1;
+    transform.localScale = newScale;
+}
     private void OnDisable() 
     {
         entity.onFlipped -= FlipUI;

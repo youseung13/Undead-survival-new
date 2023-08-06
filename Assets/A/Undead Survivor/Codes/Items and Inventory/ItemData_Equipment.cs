@@ -4,8 +4,12 @@ using UnityEngine;
 
 public enum EquipmentType
 {
-    Weapon,
+    Helmet,
     Armor,
+    Weapon,
+    Glove,
+    Shoes,
+    RIng,
     Amulet,
     Flask
 }
@@ -15,6 +19,7 @@ public class ItemData_Equipment : ItemData
 {
    public EquipmentType equipmentType;
 
+    public float itemCooldown;
    public ItemEffect[] itemEffects;
 
    public int strength;
@@ -38,11 +43,15 @@ public class ItemData_Equipment : ItemData
    [Header("Craft requirements")]
    public List<InventoryItem> craftingMaterials;
 
+   private int DescriptionLength;
+
    public void Effect(Transform _enemyposition)
    {
+    
     foreach(var item in itemEffects)
     {
         item.ExecuteEffect(_enemyposition);
+    
     }
    }
 
@@ -96,5 +105,55 @@ public class ItemData_Equipment : ItemData
         playerStats.lightingDamage.RemoveModifier(lightingDamage);
    }
 
-  
+
+    public override string GetDescription()
+    {
+
+        sb.Length = 0;
+        DescriptionLength = 0;
+
+        AddItemDescription(strength, "Strength");
+        AddItemDescription(agility, "agility");
+        AddItemDescription(intelligence, "intelligence");
+        AddItemDescription(vitality, "vitality");
+
+        AddItemDescription(damage, "damage");
+        AddItemDescription(critChance, "critChance");
+        AddItemDescription(critPower, "critPower");
+
+        AddItemDescription(health, "health");
+        AddItemDescription(evasion, "evasion");
+        AddItemDescription(armor, "armor");
+        AddItemDescription(magicResistance, "magicResistance");
+
+        AddItemDescription(fireDamage, "fireDamage");
+        AddItemDescription(iceDamage, "iceDamage");
+        AddItemDescription(lightingDamage, "lightingDamage");
+
+        if(DescriptionLength <5)
+        {
+            for (int i = 0; i < 5-DescriptionLength; i++)
+            {
+                sb.AppendLine();
+                sb.Append("");
+            }
+        }
+
+
+      return sb.ToString();
+    }
+
+    private void AddItemDescription(int _value, string _name)
+    {
+        if(_value != 0)
+        {
+            if(sb.Length>0)
+            sb.AppendLine();
+
+            if(_value>0)
+            sb.Append("+ " + _value + " " + _name);
+
+            DescriptionLength++;
+        }
+    }
 }

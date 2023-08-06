@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53e14880704af9e4eae8f2eafa78bc1b, type: 3}
-  m_Name: ICe and Fire effect
+  m_Name: Ice and Fire effect
   m_EditorClassIdentifier: 
   iceAndFireprefab: {fileID: 2428169486346053249, guid: 78dab0195b1d0b94f95b9efdbe7fbcf4, type: 3}

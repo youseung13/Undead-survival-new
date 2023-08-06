@@ -17,17 +17,17 @@ public class Crystal_Skill_Controller : MonoBehaviour
     private bool canGrow;
     private float growSpeed =5;
 
-    private Transform closestTarget;
+    private Transform RandomTargetinRadius;
     [SerializeField] private LayerMask whatIsEnemy;
 
-    public void SetUpCrystal(float _crystalDuration,bool _canExplode, bool _canMove, float _moveSpeed, Transform _closestTarget,Player2 _player)
+    public void SetUpCrystal(float _crystalDuration,bool _canExplode, bool _canMove, float _moveSpeed, Transform _RandomTargetinRadius,Player2 _player)
     {
         player = _player;
         crystalExistTimer = _crystalDuration;
         canExplode = _canExplode;
         canMove = _canMove;
         moveSpeed = _moveSpeed;
-        closestTarget = _closestTarget;
+        RandomTargetinRadius = _RandomTargetinRadius;
     }
 
     public void ChooseRandomEnemy()
@@ -37,7 +37,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius,whatIsEnemy);
 
         if(colliders.Length>0)//없을떄 오류나지 않게
-        closestTarget = colliders[Random.Range(0,colliders.Length)].transform;//타겟을 랜덤한 적으로 지정
+        RandomTargetinRadius = colliders[Random.Range(0,colliders.Length)].transform;//타겟을 랜덤한 적으로 지정
     }
 
     private void Update() 
@@ -51,9 +51,11 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
         if(canMove)
         {
-            transform.position = Vector2.MoveTowards(transform.position, closestTarget.position, moveSpeed*Time.deltaTime);
+            if(RandomTargetinRadius == null)
+            return;
+            transform.position = Vector2.MoveTowards(transform.position, RandomTargetinRadius.position, moveSpeed*Time.deltaTime);
 
-            if(Vector2.Distance(transform.position, closestTarget.position) < 1)
+            if(Vector2.Distance(transform.position, RandomTargetinRadius.position) < 1)
             {
                  FinishCrystal();
                 canMove = false;
@@ -73,7 +75,15 @@ public class Crystal_Skill_Controller : MonoBehaviour
         foreach(var hit in colliders)
         {
             if(hit.GetComponent<Enemy2>() != null)
+            {
                 player.stats.DoMagicalDamage(hit.GetComponent<CharacterStats>());// 크리스탈 딜링
+
+                ItemData_Equipment equipedAmultet = Inventory.instance.GetEquipment(EquipmentType.Amulet);//아뮬렛 장비착용확인
+
+                if(equipedAmultet != null)//착용중이면
+                 equipedAmultet.Effect(hit.transform);//효과있으면발동
+            }
+
         }
     }
 

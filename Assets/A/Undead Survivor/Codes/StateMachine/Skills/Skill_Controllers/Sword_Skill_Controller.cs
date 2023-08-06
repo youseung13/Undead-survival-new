@@ -226,7 +226,13 @@ public class Sword_Skill_Controller : MonoBehaviour
     private void SwordSkillDamage(Enemy2 enemy)
     {
         enemy.DamageImpact();
-        enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration);
+        enemy.FreezeTimeFor(freezeTimeDuration);
+       // enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration); 함수추가해서 위에껄로 대체
+
+        ItemData_Equipment equipedAmultet = Inventory.instance.GetEquipment(EquipmentType.Amulet);//아뮬렛 장비착용확인
+
+        if(equipedAmultet != null)//착용중이면
+        equipedAmultet.Effect(enemy.transform);//효과있으면발동
     }
 
     private void SetupTargetForBounce(Collider2D collision)

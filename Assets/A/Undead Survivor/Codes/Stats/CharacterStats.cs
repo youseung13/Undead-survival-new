@@ -1,8 +1,32 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
+
+public enum StatType
+{
+    strength,
+    agility,
+    intelligence,
+    vitality,
+    damage,
+    critChance,
+    critPower,
+    maxHealth,
+    health,
+    armor,
+    evasion,
+    magicResistance,
+    fireDamage,
+    iceDamage,
+    lightingDamage
+
+}
 
 public class CharacterStats : MonoBehaviour
 {
     private EntityFX fx;
+
+   
 
 
    [Header("Major stats")]
@@ -57,6 +81,7 @@ public class CharacterStats : MonoBehaviour
     critPower.SetDefaultValue(150);
     currentHealth = GetMaxHealthValue();
     fx = GetComponent<EntityFX>();
+    
 
    }
 
@@ -81,6 +106,28 @@ public class CharacterStats : MonoBehaviour
     }
 
 
+    public virtual void IncreaseStatBy(int _modifier, float _duration , Stat _statToModiry)
+    {
+        
+       StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModiry)); //start coroutine for stat increase
+    }
+    
+    
+    private IEnumerator StatModCoroutine(int _modifier, float _duration , Stat _statToModiry)
+    {
+       
+        _statToModiry.AddModifier(_modifier);
+
+        yield return new WaitForSeconds(_duration);
+
+       
+    
+        _statToModiry.RemoveModifier(_modifier);
+    }
+
+    
+
+
     public virtual void DoDamage(CharacterStats _targetStats)
     {
         if (TargetCanAvoidAttack(_targetStats))
@@ -97,7 +144,7 @@ public class CharacterStats : MonoBehaviour
         _targetStats.TakeDamage(totalDamage);
 
         //if inventory current weapon has fire effect
-       // then DoMagicalDamage(_targetStats);
+        DoMagicalDamage(_targetStats);//평타에 속성데미지 추가 ailemnt on primary attack
     }
 
     
@@ -286,6 +333,19 @@ public class CharacterStats : MonoBehaviour
         Die();
    }
 
+   public virtual void IncreaseHealthBy(int _amount)
+   {
+    currentHealth += _amount;
+
+        if(currentHealth > GetMaxHealthValue())
+            currentHealth = GetMaxHealthValue();
+
+        if(onHealthChanged != null)//변경됐으면 ui  업데이트
+            onHealthChanged();
+
+
+   }
+
 
 
     protected virtual void DecreaseHealthBy(int _damage)
@@ -366,5 +426,28 @@ public class CharacterStats : MonoBehaviour
     }
 
     #endregion
+
+
+
+    public Stat GetStat(StatType _statType)
+    {
+        if(_statType == StatType.strength) return strength;
+        else if(_statType == StatType.agility) return agility;
+        else if(_statType == StatType.intelligence) return intelligence;
+        else if(_statType == StatType.vitality) return vitality;
+        else if(_statType == StatType.damage) return damage;
+        else if(_statType == StatType.critChance) return critChance;
+        else if(_statType == StatType.critPower) return critPower;
+        else if(_statType == StatType.maxHealth) return maxHealth;
+        else if(_statType == StatType.health) return health;
+        else if(_statType == StatType.armor) return armor;
+        else if(_statType == StatType.evasion) return evasion;
+        else if(_statType == StatType.magicResistance) return magicResistance;
+        else if(_statType == StatType.fireDamage) return fireDamage;
+        else if(_statType == StatType.iceDamage) return iceDamage;
+        else if(_statType == StatType.lightingDamage) return lightingDamage;
+
+        return null;
+    }
 }
 
