@@ -14,7 +14,7 @@ public class ItemObject : MonoBehaviour
             return;
 
 
-        GetComponent<SpriteRenderer>().sprite = itemData.icon;
+        GetComponent<SpriteRenderer>().sprite = itemData.itemIcon;
         gameObject.name = "Item object - " + itemData.itemName;
     }
 
@@ -39,6 +39,7 @@ public class ItemObject : MonoBehaviour
             return;
         }
 
+        Debug.Log(itemData.itemName + " pick u!p!");
 
         Inventory.instance.AddItem(itemData);
         Destroy(gameObject);

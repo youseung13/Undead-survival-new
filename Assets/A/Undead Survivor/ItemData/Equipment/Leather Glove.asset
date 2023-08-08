@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Leather Glove
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Leather Glove
-  icon: {fileID: 741270692, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemName: Leather Shoes
+  itemIcon: {fileID: 741270692, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  ID: 3003
   dropChance: 0
   equipmentType: 3
   itemCooldown: 0
@@ -28,9 +29,11 @@ MonoBehaviour:
   critPower: 0
   health: 25
   armor: 5
-  evasion: 0
+  evasion: 5
   magicResistance: 0
   fireDamage: 0
   iceDamage: 0
   lightingDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 2733a3876ce64404397d8d14914f8b6b, type: 2}
+    stackSize: 3

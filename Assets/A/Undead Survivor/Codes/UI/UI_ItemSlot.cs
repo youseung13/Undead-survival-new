@@ -5,14 +5,14 @@ using UnityEngine.EventSystems;
 
 public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler ,IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    [SerializeField] private TextMeshProUGUI  itemText;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TextMeshProUGUI  itemText;
 
-    private UI ui;
+    protected UI ui;
     public InventoryItem item;
     // Start is called before the first frame update
 
-    private void Start()
+    protected virtual void Start()
     {
         ui = GetComponentInParent<UI>();
     }
@@ -24,7 +24,7 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler ,IPointerEnterHan
         
         if(item != null)
         {
-            itemImage.sprite = item.data.icon;
+            itemImage.sprite = item.data.itemIcon;
 
             if(item.stackSize >1)
             {
@@ -61,6 +61,8 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler ,IPointerEnterHan
 
         if(item.data.itemType == ItemType.Equipment)
       Inventory.instance.EquipItem(item.data);
+
+        ui.itemToolTip.hideToolTip();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -68,7 +70,23 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler ,IPointerEnterHan
         if(item == null)
         return;
 
+        Vector2 mousePosition = Input.mousePosition;
+
+       float xOffset = 0;
+       float yOffset = 0;
+
+       if(mousePosition.x > 600)
+            xOffset = -150;
+        else
+            xOffset = 150;
+        
+        if(mousePosition.y > 320)
+            yOffset = -150;
+        else
+            yOffset = 150;
+
       ui.itemToolTip.ShowToolTip(item.data as ItemData_Equipment);
+      ui.itemToolTip.transform.position = new Vector2(mousePosition.x + xOffset, mousePosition.y + yOffset);
     }
 
     public void OnPointerExit(PointerEventData eventData)

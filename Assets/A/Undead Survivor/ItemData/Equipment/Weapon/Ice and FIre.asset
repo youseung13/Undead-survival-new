@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Ice and FIre
-  icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemIcon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  ID: 2011
   dropChance: 7.9
   equipmentType: 2
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 4512e4726f87c434c9a0512f1b69bd39, type: 2}
   - {fileID: 11400000, guid: dde8b2c37a0e65342880618522454f6e, type: 2}
+  itemEffectDescription: 'Unique : Each 3rd attack you launc ice and fire projectile.'
   strength: 0
   agility: 0
   intelligence: 0
@@ -35,4 +37,8 @@ MonoBehaviour:
   fireDamage: 5
   iceDamage: 7
   lightingDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 9548f7b88a78e10499137ba3df8ef8bb, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 2733a3876ce64404397d8d14914f8b6b, type: 2}
+    stackSize: 3

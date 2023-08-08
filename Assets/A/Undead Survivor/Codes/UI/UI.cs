@@ -9,13 +9,18 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject craftUI;
     [SerializeField] private GameObject optionsUI;
 
+    public GameObject[] buttons;
+    public GameObject[] screens;
+
+    public UI_SkillToolTip skillToolTip;
     public UI_ItemTooltip itemToolTip;
     public UI_StatTooltip statToolTip;
+    public UI_CraftWindow craftWindow;
     // Start is called before the first frame update
     void Start()
     {
        //itemToolTip = GetComponentInChildren<UI_ItemTooltip>();
-       SwitchTo(null);//시작하면 안보이게
+      // SwitchTo(null);//시작하면 안보이게
 
        itemToolTip.gameObject.SetActive(false);
        statToolTip.gameObject.SetActive(false);
@@ -47,6 +52,28 @@ public class UI : MonoBehaviour
 
         if(_menu != null)
             _menu.SetActive(true);
+    }
+
+    public void ToggleScreen(int screenIndex)
+    {
+        bool isActive = screens[screenIndex].activeSelf;
+
+        // First, close all the screens
+        foreach (GameObject screen in screens)
+        {
+            screen.SetActive(false);
+        }
+
+        // Then, open the selected screen if it was not already active
+        if (!isActive)
+        {
+            screens[screenIndex].SetActive(true);
+            Time.timeScale = 0f; // Pause the game
+        }
+        else
+        {
+            Time.timeScale = 1f; // Resume the game
+        }
     }
 
 

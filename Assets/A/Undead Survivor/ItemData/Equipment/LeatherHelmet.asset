@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e1119bc52382ae48afb60f8439c0f92, type: 3}
-  m_Name: LeatherHelmet 1
+  m_Name: LeatherHelmet
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Leather helmet
-  icon: {fileID: -692011732, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemIcon: {fileID: -692011732, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  ID: 0
   dropChance: 0
   equipmentType: 0
   itemCooldown: 0
@@ -33,4 +34,6 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightingDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 2733a3876ce64404397d8d14914f8b6b, type: 2}
+    stackSize: 4

@@ -19,6 +19,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
         Inventory.instance.UnequipItem(item.data as ItemData_Equipment);//장비 해제하고
         Inventory.instance.AddItem(item.data as ItemData_Equipment);//인벤에 추가하고
 
+        ui.itemToolTip.hideToolTip();
+
         
         CleanUpSlot();//장비슬롯 비우고
     }

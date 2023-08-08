@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
+    static int equipmentCounter;
 
-    public List<ItemData> statingItems;
+    public List<ItemData> startingItems;
 
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
     public List<InventoryItem> inventory;
-    public Dictionary<ItemData,InventoryItem> inventoryDictionary;
+    public Dictionary<int,InventoryItem> inventoryDictionary;
 
     public List<InventoryItem> stash;
     public Dictionary<ItemData,InventoryItem> stashDictionary;
@@ -54,7 +55,7 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         inventory = new List<InventoryItem>();
-        inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
+        inventoryDictionary = new Dictionary<int, InventoryItem>();
 
         stash = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
@@ -73,9 +74,10 @@ public class Inventory : MonoBehaviour
 
     private void AddStartingItems()
     {
-        for (int i = 0; i < statingItems.Count; i++)
+        for (int i = 0; i < startingItems.Count; i++)
         {
-            AddItem(statingItems[i]);
+            if(startingItems[i] != null)
+            AddItem(startingItems[i]);
 
         }
     }
@@ -114,9 +116,9 @@ public class Inventory : MonoBehaviour
     {
        if(equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
       {
-        equipment.Remove(value);
-        equipmentDictionary.Remove(itemToRemove);
-        itemToRemove.RemoveModifiers();
+        equipment.Remove(value);//장비창에서제거
+        equipmentDictionary.Remove(itemToRemove);//장비딕션에서 제거
+        itemToRemove.RemoveModifiers();//효과제거
       }
     }
 
@@ -187,29 +189,67 @@ public class Inventory : MonoBehaviour
           stashDictionary.Add(_item,newItem);
         }
     }
-
-    private void AddToInventory(ItemData _item)
+    
+     private void AddToInventory(ItemData _item)
     {
-       if(inventoryDictionary.TryGetValue(_item,out InventoryItem value))
-      {
-        value.AddStack();
-      }
-      else
-      {
+        if (_item.itemType == ItemType.Material)
+        {
+            if(stashDictionary.TryGetValue(_item, out InventoryItem value))
+            {
+               value.AddStack();
+            }
+            else
+            {
+                        InventoryItem newItem = new InventoryItem(_item);
+          stash.Add(newItem);
+          stashDictionary.Add(_item,newItem);
+            }
+
+        }
+        else
+        {
+             ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+            int itemID = ((int)newEquipment.equipmentType * 1000) + Inventory.equipmentCounter++;
+            newEquipment.ID = itemID;
+            InventoryItem newItem = new InventoryItem(_item);
+            inventory.Add(newItem);
+            inventoryDictionary.Add(newEquipment.ID, newItem);
+        }
+    }
+/*
+     private void AddToInventory(ItemData _item)
+    {
+        if (inventoryDictionary.TryGetValue(_item, out InventoryItem value))
+        {
+            value.AddStack();
+        }
+        else
+        {
+            InventoryItem newItem = new InventoryItem(_item);
+            inventory.Add(newItem);
+            inventoryDictionary.Add(_item, newItem);
+        }
+    }
+*/
+    
+
+    private void AddToInventoryEquip(ItemData _item)
+    {
+
         InventoryItem newItem = new InventoryItem(_item);
         inventory.Add(newItem);
-        inventoryDictionary.Add(_item, newItem);
-      }
+       // inventoryDictionary.Add(_item, newItem);
+
     }
 
     public void RemoveItem(ItemData _item)
     {
-      if(inventoryDictionary.TryGetValue(_item, out InventoryItem value))
+      if(inventoryDictionary.TryGetValue(_item.ID, out InventoryItem value))
       {
         if(value.stackSize <=1)
         {
            inventory.Remove(value);
-           inventoryDictionary.Remove(_item); 
+           inventoryDictionary.Remove(_item.ID); 
         }    
         else
             value.RemoveStack();

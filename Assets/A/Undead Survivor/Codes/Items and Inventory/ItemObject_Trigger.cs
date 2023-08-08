@@ -12,7 +12,9 @@ public class ItemObject_Trigger : MonoBehaviour
 
     if(collision.GetComponent<Player2>() != null)
         {
+            Debug.Log(myItemObject.GetComponent<ItemData>().itemName + " pick up");
             myItemObject.PickupItem();
+
         }
     }
 }

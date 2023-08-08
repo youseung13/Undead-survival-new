@@ -103,6 +103,30 @@ public class Player2 : Entity
         Debug.Log("use flask");
     }
 
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            // Access the inventory dictionary from the Inventory instance
+            Dictionary<int, InventoryItem> inventoryDictionary = Inventory.instance.inventoryDictionary;
+
+            // Print the contents of the inventoryDictionary
+            foreach (KeyValuePair<int, InventoryItem> kvp in inventoryDictionary)
+            {
+                int key = kvp.Key;
+                InventoryItem value = kvp.Value;
+
+                // Access the stackSize and data properties of the InventoryItem
+                int stack = value.stackSize;
+                ItemData itemData = value.data;
+                ItemType _type = value.data.itemType;
+                string _name = value.data.itemName;
+                float _chance = value.data.dropChance;
+
+
+                // Print the values to the console
+                Debug.Log("Key: " + key + ", ItemData: " + itemData + ", stacksize:" + stack+ ", type:" + _type +", name: "+ _name +", dropchance:" +_chance);
+            }
+        }
+
     
    }
 
