@@ -34172,7 +34172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &951768111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34188,7 +34188,7 @@ MonoBehaviour:
   xLimit: 960
   yLimit: 540
   xOffst: 150
-  yOffst: 100
+  yOffst: 150
   description: {fileID: 437908599}
 --- !u!114 &951768112
 MonoBehaviour:
