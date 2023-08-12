@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9591a00e94c90488ec6eaf55edcb7f, type: 3}
   m_Name: Armor Buff
   m_EditorClassIdentifier: 
+  effectDescription: armor 50 buff
+  isEffecting: 0
   buffType: 9
   buffAmount: 50
   buffDuration: 7

@@ -23,8 +23,7 @@ public class ItemData_Equipment : ItemData
     [Header("Unique effect")]
     public float itemCooldown;
    public ItemEffect[] itemEffects;
-   [TextArea]
-   public string itemEffectDescription;
+
 
    public int strength;
    public int agility;
@@ -134,6 +133,16 @@ public class ItemData_Equipment : ItemData
         AddItemDescription(iceDamage, "iceDamage");
         AddItemDescription(lightingDamage, "lightingDamage");
 
+        for (int i = 0; i < itemEffects.Length; i++)
+        {
+            if(itemEffects[i].effectDescription.Length >0)
+            {
+                sb.AppendLine();
+                sb.AppendLine("Unique : " + itemEffects[i].effectDescription);
+                DescriptionLength++;
+            }
+        }
+
         if(DescriptionLength <5)
         {
             for (int i = 0; i < 5-DescriptionLength; i++)
@@ -142,13 +151,6 @@ public class ItemData_Equipment : ItemData
                 sb.Append("");
             }
         }
-
-        if(itemEffectDescription.Length > 0)
-        {
-            sb.AppendLine();
-            sb.Append(itemEffectDescription);
-        }
-
 
       return sb.ToString();
     }

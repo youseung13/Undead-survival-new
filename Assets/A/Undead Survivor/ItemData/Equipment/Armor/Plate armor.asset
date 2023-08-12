@@ -15,11 +15,12 @@ MonoBehaviour:
   itemType: 1
   itemName: Plate armor
   itemIcon: {fileID: -1871269579, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  ID: 1052
+  ID: 1010
   dropChance: 90
   equipmentType: 1
   itemCooldown: 0
-  itemEffects: []
+  itemEffects:
+  - {fileID: 11400000, guid: 9ff80336a4c1e1447ac81a8833289657, type: 2}
   strength: 0
   agility: 0
   intelligence: 0
