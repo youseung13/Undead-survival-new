@@ -10,6 +10,7 @@ public class Clone_Skill_Controller : MonoBehaviour
     [SerializeField] private float colorLoosingSpeed;
 
     private float cloneTimer;
+    private float attackMultiplier;
     [SerializeField] private Transform attackCheck;
     [SerializeField] private float attackCheckRadius =.8f;
     private Transform closetEnemy;
@@ -38,12 +39,12 @@ public class Clone_Skill_Controller : MonoBehaviour
 
     }
   public void SetupClone
-  (Transform _newTransform, float _cloneduration, bool _canAttack, Vector3 _offset, Transform _closestEnemy,bool _canDuplicate,float _cahanceToDuplicate,Player2 _player)
+  (Transform _newTransform, float _cloneduration, bool _canAttack, Vector3 _offset, Transform _closestEnemy,bool _canDuplicate,float _cahanceToDuplicate,Player2 _player, float _attackMultiplier)
   {
     if(_canAttack)
     anim.SetInteger("AttackNumber", Random.Range(1,3));
 
-
+    attackMultiplier = _attackMultiplier;
     player = _player;
     transform.position = _newTransform.position + _offset;
     cloneTimer = _cloneduration;
@@ -68,7 +69,20 @@ public class Clone_Skill_Controller : MonoBehaviour
         {
             if(hit.GetComponent<Enemy2>() != null)
             {
-                player.stats.DoDamage(hit.GetComponent<CharacterStats>());//클론 딜링
+               // player.stats.DoDamage(hit.GetComponent<CharacterStats>());//클론 딜링
+               PlayerStats playerStats = player.GetComponent<PlayerStats>();
+               EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
+
+               playerStats.CloneDoDamage(enemyStats, attackMultiplier);
+
+               if(player.skill.clone.canApplyOnHitEffect)//클론어택에 다른 공격효과적용
+               {
+                //inventory get weapon call item Effect
+                 ItemData_Equipment weaponData = Inventory.instance.GetEquipment(EquipmentType.Weapon);
+              
+                  if(weaponData != null)
+                    weaponData.Effect(hit.transform);
+               }
 
                 if(canDuplicateClone)
                 {

@@ -42,4 +42,35 @@ public class PlayerStats : CharacterStats
         }
 
     }
+
+    public override void OnEvasion()
+    {
+        player.skill.dodge.CreateMirageDodge();
+       Debug.Log("Player avoided");
+    }
+
+    public void CloneDoDamage(CharacterStats _targetStats, float _multiplier)
+    {   
+        if (TargetCanAvoidAttack(_targetStats))
+            return;
+
+        int totalDamage = damage.GetValue() + strength.GetValue();    
+
+        if(_multiplier >0)
+            totalDamage = Mathf.RoundToInt(totalDamage * _multiplier);
+
+
+
+        if(CanCrit())
+        {
+            totalDamage = CalculateCriticalDamage(totalDamage);
+        }
+
+        totalDamage = CheckTargetArmor(_targetStats, totalDamage);
+        _targetStats.TakeDamage(totalDamage);
+
+        //if inventory current weapon has fire effect
+        DoMagicalDamage(_targetStats);//평타에 속성데미지 추가 ailemnt on primary attack
+
+    }
 }

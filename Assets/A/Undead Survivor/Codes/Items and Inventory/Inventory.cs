@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
     private float LastTimeUsedFlask;
     private float LastTimeUsedArmor;
 
-    private float flaskCooldown;
+    public float flaskCooldown {get; private set;}
     private float armorCooldown;
 
 
@@ -125,42 +125,46 @@ public class Inventory : MonoBehaviour
     private void UpdateSlotUI()
     {
 
-      for (int i = 0; i < equipmentSlot.Length; i++)
-      {
-          foreach(KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        for (int i = 0; i < equipmentSlot.Length; i++)
         {
-          if(item.Key.equipmentType == equipmentSlot[i].slotType)
-            equipmentSlot[i].UpdateSlot(item.Value);
+            foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equipmentType == equipmentSlot[i].slotType)
+                    equipmentSlot[i].UpdateSlot(item.Value);
+            }
         }
-      }
 
 
-      for( int i = 0; i < InventoryItemSlot.Length; i++)
-      {
-        InventoryItemSlot[i].CleanUpSlot();
-      }
+        for (int i = 0; i < InventoryItemSlot.Length; i++)
+        {
+            InventoryItemSlot[i].CleanUpSlot();
+        }
 
-      for( int i = 0; i < stashItemSlot.Length; i++)
-      {
-        stashItemSlot[i].CleanUpSlot();
-      }
-
-
-      for(int i = 0; i< inventory.Count; i ++)
-      {
-        InventoryItemSlot[i].UpdateSlot(inventory[i]);
-      }
-
-      for(int i = 0; i< stash.Count; i ++)
-      {
-        stashItemSlot[i].UpdateSlot(stash[i]);
-      }
+        for (int i = 0; i < stashItemSlot.Length; i++)
+        {
+            stashItemSlot[i].CleanUpSlot();
+        }
 
 
-      for (int i = 0; i < statSlot.Length; i++)//update info of stats in character UI
-      {
-        statSlot[i].UpdateStatValueUI(); 
-      }
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            InventoryItemSlot[i].UpdateSlot(inventory[i]);
+        }
+
+        for (int i = 0; i < stash.Count; i++)
+        {
+            stashItemSlot[i].UpdateSlot(stash[i]);
+        }
+
+        UpdateStatsUI();
+    }
+
+    public void UpdateStatsUI()
+    {
+        for (int i = 0; i < statSlot.Length; i++)//update info of stats in character UI
+        {
+            statSlot[i].UpdateStatValueUI();
+        }
     }
 
     public void AddItem(ItemData _item)

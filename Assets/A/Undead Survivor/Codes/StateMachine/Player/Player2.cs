@@ -94,7 +94,7 @@ public class Player2 : Entity
     CheckForInput();
 
 
-    if(Input.GetKeyDown(KeyCode.P))
+    if(Input.GetKeyDown(KeyCode.P) && skill.crystal.crystalUnlocked)
         skill.crystal.CanUseSkill();
 
     if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -174,6 +174,8 @@ public class Player2 : Entity
     private void CheckForInput()
    {
 
+        if(skill.dash.dashUnlocked == false)
+        return;
     
         if(Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {

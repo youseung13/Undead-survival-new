@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private GameObject craftUI;
     [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject inGameUI;
 
     public GameObject[] buttons;
     public GameObject[] screens;
@@ -16,11 +17,17 @@ public class UI : MonoBehaviour
     public UI_ItemTooltip itemToolTip;
     public UI_StatTooltip statToolTip;
     public UI_CraftWindow craftWindow;
+
+    private void Awake() 
+    {
+        SwitchTo(skillTreeUI);//we need this to assign events on skill tree slot befor we assign event on skill script
+    }
     // Start is called before the first frame update
     void Start()
     {
        //itemToolTip = GetComponentInChildren<UI_ItemTooltip>();
-      // SwitchTo(null);//시작하면 안보이게
+       //SwitchTo(null);//시작하면 안보이게
+       SwitchTo(inGameUI);
 
        itemToolTip.gameObject.SetActive(false);
        statToolTip.gameObject.SetActive(false);
@@ -45,7 +52,7 @@ public class UI : MonoBehaviour
 
     public void SwitchTo(GameObject _menu)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 1; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
@@ -82,9 +89,21 @@ public class UI : MonoBehaviour
         if(_menu != null && _menu.activeSelf)
         {
             _menu.SetActive(false);
+            CheckForInGameUI();
             return;
         }
 
         SwitchTo(_menu);
+    }
+
+    private void CheckForInGameUI()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if(transform.GetChild(i).gameObject.activeSelf)
+                return;
+        }
+
+        SwitchTo(inGameUI);
     }
 }

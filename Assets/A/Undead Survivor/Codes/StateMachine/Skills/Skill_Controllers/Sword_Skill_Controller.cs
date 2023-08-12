@@ -102,6 +102,9 @@ public class Sword_Skill_Controller : MonoBehaviour
         transform.parent = null;
         isReturning =true;
 
+
+        //sword.skill.setcooldown;
+
     }
 
 
@@ -225,8 +228,16 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SwordSkillDamage(Enemy2 enemy)
     {
-        enemy.DamageImpact();
-        enemy.FreezeTimeFor(freezeTimeDuration);
+        EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+
+        player.stats.DoDamage(enemyStats);
+        //enemy.DamageImpact();
+
+        if(player.skill.sword.TimeStopUnlocked)
+            enemy.FreezeTimeFor(freezeTimeDuration);
+
+        if(player.skill.sword.vulnerableUnlocked)
+            enemyStats.MakeVulnerableFor(freezeTimeDuration);
        // enemy.StartCoroutine("FreezeTimerFor", freezeTimeDuration); 함수추가해서 위에껄로 대체
 
         ItemData_Equipment equipedAmultet = Inventory.instance.GetEquipment(EquipmentType.Amulet);//아뮬렛 장비착용확인

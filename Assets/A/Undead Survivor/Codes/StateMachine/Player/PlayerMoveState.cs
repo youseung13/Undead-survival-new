@@ -25,11 +25,11 @@ public class PlayerMoveState : PlayerState
         if(!canmove)
         return;
       
-        if(Input.GetKeyDown(KeyCode.F5))
+        if(Input.GetKeyDown(KeyCode.F5) && player.skill.blackhole.blackholeUnlocked)
         stateMachine.ChangeState(player.blackHole);
      
         //rb.velocity = new Vector2(player.moveDirection.x * player.moveSpeed, player.moveDirection.y * player.moveSpeed);
-        if((Input.GetKeyDown(KeyCode.T) ||Input.GetKeyDown(KeyCode.Mouse1)) && HasNoSword())
+        if((Input.GetKeyDown(KeyCode.T) ||Input.GetKeyDown(KeyCode.Mouse1)) && HasNoSword() && player.skill.sword.swordUnlocked)
           {
      //공격중일떄 못움직이게
         stateMachine.ChangeState(player.aimSword);
@@ -38,7 +38,7 @@ public class PlayerMoveState : PlayerState
         if(Input.GetKeyDown(KeyCode.V) && player.isattack != true)
         stateMachine.ChangeState(player.primaryAttack);
 
-        if(Input.GetKeyDown(KeyCode.Q) && player.isattack != true)
+        if(Input.GetKeyDown(KeyCode.Q) && player.isattack != true && player.skill.parry.parryUnlocked)
         stateMachine.ChangeState(player.counterAttack);
 
         //player.SetVelocity(xInput * player.moveSpeed, yInput* player.moveSpeed);

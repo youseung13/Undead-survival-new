@@ -17,7 +17,7 @@ public class PlayerDashState : PlayerState
         base.Enter();
 
        // player.skill.clone.CreateClone(player.transform,Vector2.zero);//데쉬하면 클론생기게
-        player.skill.clone.CreateCloneOnDashStart();
+        player.skill.dash.CloneOnDash();
         stateTimer = player.dashDuration;
         canDash =true;
         canmove =true;
@@ -28,7 +28,7 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
 
-        player.skill.clone.CreateCloneOnDashOver();
+       player.skill.dash.CloneOnArrival();
 
        // player.SetZeroVelocity();//공격중일떄 못움직이게
     }

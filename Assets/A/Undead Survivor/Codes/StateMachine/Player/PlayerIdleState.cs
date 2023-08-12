@@ -23,16 +23,16 @@ public class PlayerIdleState : PlayerState
     public override void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.F6))
+        if(Input.GetKeyDown(KeyCode.F5) && player.skill.blackhole.blackholeUnlocked)
         stateMachine.ChangeState(player.blackHole);
 
-        if((Input.GetKeyDown(KeyCode.T)||Input.GetKeyDown(KeyCode.Mouse1)) && HasNoSword())
+        if((Input.GetKeyDown(KeyCode.T)||Input.GetKeyDown(KeyCode.Mouse1)) && HasNoSword() && player.skill.sword.swordUnlocked)
         stateMachine.ChangeState(player.aimSword);
 
         if(Input.GetKeyDown(KeyCode.V) && player.isattack != true)
         stateMachine.ChangeState(player.primaryAttack);
 
-        if(Input.GetKeyDown(KeyCode.Q) && player.isattack != true)
+        if(Input.GetKeyDown(KeyCode.Q) && player.isattack != true && player.skill.parry.parryUnlocked)
         stateMachine.ChangeState(player.counterAttack);
 
         if(!player.isBusy)
